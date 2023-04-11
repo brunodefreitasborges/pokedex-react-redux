@@ -43,6 +43,12 @@ function PokeList() {
                 <div className="sticky top-24 right-24 h-fit">
                   <p className="text-white font-visitor animate-bounce">Loading...</p>
                 </div>
+            },
+             {
+               !selectedPokemon && !isLoading &&
+                <div className="sticky top-24 right-24 h-fit">
+                  <p className="text-white font-visitor">Select a pokemon</p>
+                </div>
             }
            
           </div>
