@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Visitor";
+  src: url("./assets/visitor.ttf");
+}
+
+.scrollbar {
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #FA8B00;
+}
+
+/* Webkit-based browsers (Chrome, Safari) */
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #FA8B00;
+  border-radius: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: #323232;
+  border-radius: 8px;
+}
