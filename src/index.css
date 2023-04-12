@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "Player2";
+    src: url("./assets/fonts/PressStart2P-Regular.ttf");
+  }
+
+  @layer base {
+    html {
+      font-family: Player2;
+    }
+  }
+
+
+.custom-border {
+  @apply border-x-[16px] border-b-[16px] border-[#D74526];
+}
+
+@screen sm {
+  .custom-border {
+    @apply border-x-[32px] border-b-[32px] border-[#D74526];
+  }
+}
+
