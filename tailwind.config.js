@@ -8,6 +8,11 @@ export default {
     extend: {
       fontFamily: {
         player2: ["Player2"],
+      },
+      colors: {
+        "primary": "#D74526",
+        "accent": "#F9A826",
+        "background": "#2E382E",
       }
     },
   },

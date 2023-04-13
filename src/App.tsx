@@ -5,7 +5,10 @@ function App() {
   return (
     <>
       <Header/>
-      <Pokelist/>
+      <div className="h-[calc(100vh_-_64px)] bg-background flex justify-start items-center
+      custom-border px-3 md:px-8 py-8">
+         <Pokelist/>
+      </div>    
     </>
   )
 }
