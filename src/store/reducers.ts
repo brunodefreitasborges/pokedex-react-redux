@@ -1,42 +1,38 @@
 import { Pokemon } from "../models/Pokemon";
-import { PokemonList } from "../models/PokemonList";
+import { PokemonPage } from "../models/PokemonList";
 import { ActionType, PokemonAction } from "./actions";
 
 export interface State {
   favouritePokemons: string[];
-  pokemonList: Pokemon[];
   isLoading: boolean;
-  allPokemons: PokemonList[];
+  pokemonPage?: PokemonPage;
   selectedPokemon: Pokemon | null;
   page: number;
 }
 
 const initialState: State = {
   favouritePokemons: [],
-  pokemonList: [],
-  allPokemons: [],
   isLoading: false,
   selectedPokemon: null,
-  page: 1,
+  page: 0,
 };
 
 export const reducer = (state: State = initialState, action: PokemonAction): State => {
   switch (action.type) {
-    case ActionType.SetMyPokemonList:
-      return {
-        ...state,
-        pokemonList: action.payload,
-        isLoading: false,
-      };
     case ActionType.SetPokemonList:
       return {
         ...state,
-        allPokemons: action.payload,
+        pokemonPage: action.payload,
       };
     case ActionType.SelectPokemon:
       return {
         ...state,
         selectedPokemon: action.payload,
+      };
+    case ActionType.SetPage:
+      return {
+        ...state,
+        page: action.payload ? state.page + 1 : state.page - 1
       };
     case ActionType.SetLoading:
       return {

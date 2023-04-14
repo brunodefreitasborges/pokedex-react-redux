@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { capitalize } from "../common/helperFunctions";
+import { capitalize, getBackgroundColor, getTypeIcon } from "../common/helperFunctions";
 import { typeColors, typeIcons } from "../common/typesColors";
 import { State } from "../store/reducers";
 
@@ -10,20 +10,17 @@ function PokeCard() {
     const dispatch = useDispatch();
     const {selectedPokemon, isLoading} = useSelector((state: State) => state);
   
-    const typeColor = typeColors[selectedPokemon?.types[0].type.name || 'normal'];
-    const typeIcon = typeIcons[selectedPokemon?.types[0].type.name || 'normal'];
-  
     return (
       <> 
       { selectedPokemon && !isLoading &&
-        <div className={`w-[500px] h-full shadow-black shadow-2xl rounded-br-[100px] rounded-tl-[100px] 
+        <div className={`w-[500px] max-h-[600px] shadow-black shadow-2xl rounded-br-[100px] rounded-tl-[100px] 
         flex flex-col gap-8 items-center py-8 px-4
-        bg-${typeColor}`}>
+        bg-type-${selectedPokemon.types[0].type.name}`}>
             <div className="flex w-full justify-around">
                 <div className="flex flex-col justify-center items-end gap-4">
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 max-w-[200px]">
                         <h3>Name:</h3>
-                        <span className="line-clamp-2">{capitalize(selectedPokemon.name)}</span>
+                        <span className="">{capitalize(selectedPokemon.name)}</span>
                     </div>
                     <div className="flex flex-wrap gap-2">
                         <h3>Weight:</h3>
@@ -42,17 +39,23 @@ function PokeCard() {
                 </div>
             </div>
             <div className="w-[90%] h-[70%] flex flex-col items-end gap-8 px-8 rounded-br-[100px]">
-                <div className="w-fit h-[64px] bg-background flex items-center rounded-3xl gap-2 px-4">
-                    <h3 className={`text-sm text-${typeColor}`}>{selectedPokemon.types[0].type.name.toUpperCase()}</h3>
-                    <img className="w-[32px]" src={typeIcon} alt="" />
-                </div>
+
+            <div className="flex gap-4">
+                {selectedPokemon.types.map((type, index) => (
+                    <div key={index} className="w-fit h-[64px] bg-background flex items-center rounded-3xl gap-2 px-4">
+                        <h3 className="text-sm">{type.type.name.toUpperCase()}</h3>
+                        <img className="w-[32px]" src={getTypeIcon(type.type.name)} alt=""/>
+                    </div>
+                ))}
+            </div>
+
                     <div className="flex flex-col gap-4">
                         <h3 className="text-right text-lg">Stats</h3>
                         <div className="flex flex-col items-end gap-2">
                         
                             {
                                 selectedPokemon.stats.map((stat) => (
-                                    <div className="flex gap-2 text-sm">
+                                    <div key={stat.stat.name} className="flex gap-2 text-sm">
                                         <h4>{stat.stat.name.toUpperCase()}:</h4>
                                         <span>{stat.base_stat}</span>
                                     </div>
@@ -64,7 +67,7 @@ function PokeCard() {
         </div>
       }
       { isLoading &&
-        <div className="w-[500px] h-full flex justify-center items-center shadow-black shadow-2xl rounded-br-[100px] rounded-tl-[100px] bg-black" >
+        <div className="w-[500px] max-h-[600px] h-full flex justify-center items-center shadow-black shadow-2xl rounded-br-[100px] rounded-tl-[100px] bg-black" >
             <h3 className="animate-bounce">Loading...</h3>
         </div>
       }
