@@ -3,8 +3,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import configureMockStore, { MockStore } from 'redux-mock-store';
 import PokeList from '../PokeList';
-import { fetchPokemonList } from '../../store/actions';
-import { act } from 'react-dom/test-utils';
+
 
 const mockStore = configureMockStore([thunk]);
 
@@ -26,7 +25,7 @@ describe('PokeList Component', () => {
           }
         ],
         next: 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20',
-        previous: null
+        previous: 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20',
       },
       page: 1
     });
@@ -114,30 +113,48 @@ describe('PokeList Component', () => {
    
   });
 
-  // it('dispatches the fetchPokemonList action with a FALSE payload when the "Previous" button is clicked', async () => {
+  it('should have a disabled next button if the page is equal to 11', async () => {
 
-  //   await waitFor(() => {
-  //     store.getState().page = 2;
-  //   });
+    await waitFor(() => {
+      store.getState().page = 11;
+    });
 
-  //   render(
-  //     <Provider store={store}>
-  //       <PokeList/>
-  //     </Provider>
-  //   );
+    render(
+      <Provider store={store}>
+        <PokeList/>
+      </Provider>
+    );
   
-  //   const previousButton = await screen.getAllByTestId('previous-button')[1];
-  //   fireEvent.click(previousButton);
-    
-  //   await waitFor(() => {
-  //     const actions = store.getActions();
-  //     expect(actions).toEqual(
-  //       expect.arrayContaining([
-  //         expect.objectContaining({ type: 'SET_PAGE', payload: false }),
-  //       ])
-  //     );
-  //   });
-  // });
+    const previousButton = await screen.getAllByTestId('next-button')[1];
+    expect(previousButton).toHaveClass('text-gray-500');
+   
+  });
 
+  it('dispatches the fetchPokemonList action with a FALSE payload when the "Previous" button is clicked', async () => {
+
+    await waitFor(() => {
+      store.getState().page = 2;
+    });
+
+    await waitFor(() => {
+      render(
+        <Provider store={store}>
+          <PokeList/>
+        </Provider>
+      );
+    });
+
+    const previousButton = await screen.getAllByTestId('previous-button')[1];
+    fireEvent.click(previousButton);
+    
+    await waitFor(() => {
+      const actions = store.getActions();
+      expect(actions).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ type: 'SET_PAGE', payload: false }),
+        ])
+      );
+    });
+  });
 
 });
