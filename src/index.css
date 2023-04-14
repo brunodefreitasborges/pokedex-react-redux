@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: "Player2";
-    src: url("./assets/fonts/PressStart2P-Regular.ttf");
+    src: url("/assets/fonts/PressStart2P-Regular.ttf");
   }
 
   @layer base {
