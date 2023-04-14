@@ -1,5 +1,5 @@
 import Header from "./components/Header"
-import Pokelist from "./components/Pokelist"
+import Pokelist from "./components/PokeList"
 
 function App() {
   return (

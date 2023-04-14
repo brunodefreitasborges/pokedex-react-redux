@@ -1,6 +1,6 @@
 import { Pokemon } from "../models/Pokemon";
 import { PokemonPage } from "../models/PokemonList";
-import { ActionType, PokemonAction } from "./actions";
+import { ActionType, PokemonAction } from "./actionTypes";
 
 export interface State {
   favouritePokemons: string[];

@@ -10,11 +10,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return (
     <>
       {isOpen && (
-        <div onClick={onClose} className="fixed top-0 left-0 
-        w-screen h-screen lg:hidden
-         bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="rounded-lg 
-          w-full sm:w-3/5 h-3/5 p-4">
+        <div data-testid="modal" onClick={onClose} className="fixed top-0 left-0 flex items-center justify-center w-screen h-screen bg-black bg-opacity-50 lg:hidden">
+          <div data-testid="modal-content" className="w-full p-4 rounded-lg sm:w-3/5 h-3/5">
             {children}
           </div>
         </div>

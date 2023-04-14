@@ -1,14 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   capitalize,
-  getBackgroundColor,
   getTypeIcon,
 } from "../common/helperFunctions";
-import { typeColors, typeIcons } from "../common/typesColors";
 import { State } from "../store/reducers";
 
 function MobilePokeCard() {
-  const dispatch = useDispatch();
   const { selectedPokemon, isLoading } = useSelector((state: State) => state);
 
   return (
@@ -19,19 +16,19 @@ function MobilePokeCard() {
         flex flex-col gap-2 items-end py-2 px-2
         bg-type-${selectedPokemon.types[0].type.name}`}
         >
-          <div className="flex w-full justify-around">
-            <div className="flex flex-col justify-center items-end gap-2">
+          <div className="flex justify-around w-full">
+            <div className="flex flex-col items-end justify-center gap-2">
               <div className="flex flex-wrap gap-2 text-xs">
                 <h3>Name:</h3>
-                <span>{capitalize(selectedPokemon.name)}</span>
+                <span data-testid="card-name">{capitalize(selectedPokemon.name)}</span>
               </div>
               <div className="flex flex-wrap gap-2 text-xs">
                 <h3>Weight:</h3>
-                <span className="">{selectedPokemon.weight}kg</span>
+                <span data-testid="card-weight" className="">{selectedPokemon.weight}kg</span>
               </div>
               <div className="flex flex-wrap gap-2 text-xs">
                 <h3>Height:</h3>
-                <span className="">{selectedPokemon.height * 10}cm</span>
+                <span data-testid="card-height" className="">{selectedPokemon.height * 10}cm</span>
               </div>
             </div>
             <div
@@ -39,7 +36,8 @@ function MobilePokeCard() {
                 border-background bg-black bg-opacity-30"
             >
               <img
-                className="relative w-full h-full z-10"
+                data-testid="card-sprite"
+                className="relative z-10 w-full h-full"
                 src={selectedPokemon.sprites.front_default}
                 alt="Miniature image of the pokemon"
               />
@@ -47,7 +45,7 @@ function MobilePokeCard() {
           </div>
           <div className="flex gap-4 px-8">
             {selectedPokemon.types.map((type, index) => (
-              <div
+              <div data-testid="card-type"
                 key={index}
                 className="w-fit h-[32px] bg-background flex items-center rounded-3xl gap-2 px-2"
               >
@@ -61,11 +59,11 @@ function MobilePokeCard() {
             ))}
           </div>
           <div className="w-full flex flex-row justify-around rounded-br-[100px]">
-            <div className="flex flex-col items-start gap-4 h-full">
+            <div className="flex flex-col items-start h-full gap-4">
               <h3 className="text-xs">Abilities</h3>
               <ul className="flex flex-col gap-2">
                 {selectedPokemon.abilities.map((ability, index) => (
-                  <li key={index} className="text-[8px]">
+                  <li data-testid="card-ability" key={index} className="text-[8px]">
                     {capitalize(ability.ability.name)}
                   </li>
                 ))}
@@ -73,10 +71,10 @@ function MobilePokeCard() {
             </div>
             <div className="flex flex-col items-end gap-4">
               <div className="flex flex-col gap-4">
-                <h3 className="text-right text-xs">Stats</h3>
+                <h3 className="text-xs text-right">Stats</h3>
                 <div className="flex flex-col items-end gap-2">
                   {selectedPokemon.stats.map((stat) => (
-                    <div key={stat.stat.name} className="flex gap-2 text-[8px]">
+                    <div data-testid="card-stat" key={stat.stat.name} className="flex gap-2 text-[8px]">
                       <h4>{stat.stat.name.toUpperCase()}:</h4>
                       <span>{stat.base_stat}</span>
                     </div>

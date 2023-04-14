@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Pokemon } from "../models/Pokemon";
-import { PokemonList, PokemonPage } from "../models/PokemonList";
+import { PokemonPage } from "../models/PokemonList";
 
 class PokemonService {
   static async getPokemonByName(name: string): Promise<Pokemon> {
