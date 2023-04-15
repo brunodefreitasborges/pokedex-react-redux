@@ -18,7 +18,7 @@ function SearchInput(props: Props) {
 
   function handleSubmit() {
     if(!inputValue) return;
-    dispatch(searchPokemon(inputValue));
+    dispatch(searchPokemon(inputValue.toLowerCase()));
     props.handleOpenModal(); 
   }
 
