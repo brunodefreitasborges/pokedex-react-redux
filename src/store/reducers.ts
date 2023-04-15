@@ -4,7 +4,8 @@ import { ActionType, PokemonAction } from "./actionTypes";
 
 export interface State {
   favouritePokemons: string[];
-  isLoading: boolean;
+  isLoadingList: boolean;
+  isLoadingCard: boolean;
   pokemonPage?: PokemonPage;
   selectedPokemon: Pokemon | null;
   page: number;
@@ -12,7 +13,8 @@ export interface State {
 
 const initialState: State = {
   favouritePokemons: [],
-  isLoading: false,
+  isLoadingList: false,
+  isLoadingCard: false,
   selectedPokemon: null,
   page: 0,
 };
@@ -34,11 +36,16 @@ export const reducer = (state: State = initialState, action: PokemonAction): Sta
         ...state,
         page: action.payload ? state.page + 1 : state.page - 1
       };
-    case ActionType.SetLoading:
+    case ActionType.SetLoadingList:
       return {
         ...state,
-        isLoading: action.payload,
+        isLoadingList: action.payload,
       };
+    case ActionType.SetLoadingCard:
+    return {
+      ...state,
+      isLoadingCard: action.payload,
+    };
     default:
       return state;
   }

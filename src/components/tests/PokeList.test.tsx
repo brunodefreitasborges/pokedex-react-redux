@@ -46,10 +46,10 @@ describe('PokeList Component', () => {
       const actions = store.getActions();
       expect(actions).toEqual(
         expect.arrayContaining([
-          expect.objectContaining({ type: 'SET_LOADING' }),
+          expect.objectContaining({ type: 'SET_LOADING_LIST' }),
           expect.objectContaining({ type: 'SET_PAGE' }),
           expect.objectContaining({ type: 'SET_POKEMON_LIST' }),
-          expect.objectContaining({ type: 'SET_LOADING' })
+          expect.objectContaining({ type: 'SET_LOADING_LIST' })
         ])
       );
     });

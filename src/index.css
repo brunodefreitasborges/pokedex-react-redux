@@ -121,4 +121,9 @@
   overflow-y: auto;
 }
 
+.skeleton-class {
+  margin: 18px 32px 12px 32px; /* Or any other value that you prefer */
+  
+}
+
 

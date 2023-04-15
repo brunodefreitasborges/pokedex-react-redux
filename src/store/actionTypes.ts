@@ -5,7 +5,8 @@ export enum ActionType {
   FetchPokemonList = "FETCH_POKEMON_LIST",
   SetPokemonList = "SET_POKEMON_LIST",
   SelectPokemon = "SELECT_POKEMON",
-  SetLoading = "SET_LOADING",
+  SetLoadingList = "SET_LOADING_LIST",
+  SetLoadingCard = "SET_LOADING_CARD",
   SetPage = "SET_PAGE",
 }
 
@@ -23,8 +24,13 @@ export interface SelectPokemonAction {
   payload: Pokemon | null;
 }
 
-export interface SetLoadingAction {
-  type: ActionType.SetLoading;
+export interface SetLoadingListAction {
+  type: ActionType.SetLoadingList;
+  payload: boolean;
+}
+
+export interface SetLoadingCardAction {
+  type: ActionType.SetLoadingCard;
   payload: boolean;
 }
 
@@ -34,7 +40,8 @@ export interface SetPageAction {
 }
 
 export type PokemonAction =
-  | SetLoadingAction
+  | SetLoadingListAction
+  | SetLoadingCardAction
   | FetchPokemonListAction
   | SetPokemonListAction
   | SelectPokemonAction

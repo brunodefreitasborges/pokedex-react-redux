@@ -2,19 +2,20 @@ import { Dispatch } from "react";
 import { Pokemon } from "../models/Pokemon";
 import { PokemonPage } from "../models/PokemonList";
 import PokemonService from "../services/PokemonService";
-import { ActionType, SetPokemonListAction, SelectPokemonAction, SetLoadingAction, SetPageAction, PokemonAction } from "./actionTypes";
+import { ActionType, SetPokemonListAction, SelectPokemonAction, SetLoadingListAction, SetLoadingCardAction, SetPageAction, PokemonAction } from "./actionTypes";
 
 export const fetchPokemonList = (page?: string, next?: boolean): any => {
   return async (dispatch: Dispatch<PokemonAction>): Promise<void> => {
-    dispatch(setLoading(true));
+    dispatch(setLoadingList(true));
     if (page === undefined) page = 'limit=100';
-    if (next === undefined) dispatch(setPage(true));
-    else if (next) dispatch(setPage(true))
-    else if (!next) dispatch(setPage(false));
+    switch (next) {
+      case true: dispatch(setPage(true)); break;
+      case false: dispatch(setPage(false)); break;
+      default: dispatch(setPage(true)); break;
+    }
     const pokemonData = await PokemonService.fetchAllPokemons(page);
     dispatch(setPokemonList(pokemonData));
-
-    dispatch(setLoading(false));
+    dispatch(setLoadingList(false));
   };
 };
 
@@ -25,11 +26,10 @@ export const setPokemonList = (pokemonList: PokemonPage): SetPokemonListAction =
 
 export const fetchPokemon = (name: string): any => {
   return async (dispatch: Dispatch<PokemonAction>): Promise<void> => {
-    dispatch(setLoading(true));
+    dispatch(setLoadingCard(true));
     const response = await PokemonService.getPokemonByName(name);
     dispatch(selectPokemon(response));
-
-    dispatch(setLoading(false));
+    dispatch(setLoadingCard(false));
   };
 };
 
@@ -43,7 +43,12 @@ export const setPage = (next: boolean): SetPageAction => ({
   payload: next,
 });
 
-export const setLoading = (isLoading: boolean): SetLoadingAction => ({
-  type: ActionType.SetLoading,
+export const setLoadingList = (isLoading: boolean): SetLoadingListAction => ({
+  type: ActionType.SetLoadingList,
+  payload: isLoading,
+});
+
+export const setLoadingCard = (isLoading: boolean): SetLoadingCardAction => ({
+  type: ActionType.SetLoadingCard,
   payload: isLoading,
 });

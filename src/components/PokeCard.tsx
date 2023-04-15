@@ -6,11 +6,11 @@ import {
 import { State } from "../store/reducers";
 
 function PokeCard() {
-  const { selectedPokemon, isLoading } = useSelector((state: State) => state);
+  const { selectedPokemon, isLoadingCard } = useSelector((state: State) => state);
 
   return (
     <>
-      {selectedPokemon && !isLoading && (
+      {selectedPokemon && !isLoadingCard && (
         <div
           className={`w-[500px] max-h-[600px] shadow-black shadow-2xl rounded-br-[100px] rounded-tl-[100px] 
         flex flex-col gap-8 items-center py-8 px-4
@@ -86,7 +86,7 @@ function PokeCard() {
           </div>
         </div>
       )}
-      {isLoading && (
+      {isLoadingCard && (
         <div className="w-[500px] max-h-[600px] h-full flex justify-center items-center shadow-black shadow-2xl rounded-br-[100px] rounded-tl-[100px] bg-black">
           <h3 className="animate-bounce">Loading...</h3>
         </div>
