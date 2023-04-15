@@ -19,6 +19,21 @@ export const fetchPokemonList = (page?: string, next?: boolean): any => {
   };
 };
 
+export const searchPokemon = (name: string): any => {
+  return async (dispatch: Dispatch<PokemonAction>): Promise<void> => {
+    dispatch(setLoadingCard(true));
+    try {
+      const response = await PokemonService.getPokemonByName(name);
+      dispatch(selectPokemon(response));
+      dispatch(setLoadingCard(false));
+      dispatch(setError(false));
+    } catch (error) {
+      dispatch(setLoadingCard(false));
+      dispatch(setError(true));
+    }
+  };
+};
+
 export const setPokemonList = (pokemonList: PokemonPage): SetPokemonListAction => ({
   type: ActionType.SetPokemonList,
   payload: pokemonList,
@@ -30,6 +45,7 @@ export const fetchPokemon = (name: string): any => {
     const response = await PokemonService.getPokemonByName(name);
     dispatch(selectPokemon(response));
     dispatch(setLoadingCard(false));
+    dispatch(setError(false));
   };
 };
 
@@ -51,4 +67,9 @@ export const setLoadingList = (isLoading: boolean): SetLoadingListAction => ({
 export const setLoadingCard = (isLoading: boolean): SetLoadingCardAction => ({
   type: ActionType.SetLoadingCard,
   payload: isLoading,
+});
+
+export const setError = (error: boolean): any => ({
+  type: ActionType.SetError,
+  payload: error,
 });

@@ -6,11 +6,11 @@ import {
 import { State } from "../store/reducers";
 
 function MobilePokeCard() {
-  const { selectedPokemon, isLoadingCard } = useSelector((state: State) => state);
+  const { selectedPokemon, isLoadingCard, error } = useSelector((state: State) => state);
 
   return (
     <>
-      {selectedPokemon && !isLoadingCard && (
+      {selectedPokemon && !isLoadingCard && !error && (
         <div
           className={`w-full h-full rounded-[20px] 
         flex flex-col gap-2 items-end py-2 px-2
@@ -85,11 +85,16 @@ function MobilePokeCard() {
           </div>
         </div>
       )}
-      {isLoadingCard && (
+       {(!selectedPokemon || isLoadingCard || error) && (
         <div className="w-full h-full rounded-[20px] flex justify-center items-center bg-black">
-          <h3 className="animate-bounce">Loading...</h3>
+          {isLoadingCard ? (
+            <h3 className="animate-bounce">Loading...</h3>
+          ) : error ? (
+            <h3 className="animate-bounce line-clamp-2 text-center">Could not find the pokemon...</h3>
+          ) : null}
         </div>
       )}
+     
     </>
   );
 }

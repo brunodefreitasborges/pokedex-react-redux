@@ -8,13 +8,15 @@ import { State } from "../store/reducers";
 import PokeCard from "./PokeCard";
 import Modal from "./Modal";
 import MobilePokeCard from "./MobilePokeCard";
+import SearchInput from "./SearchInput";
 
 function Pokelist() {
   const dispatch = useDispatch();
-  const { selectedPokemon, pokemonPage, page, isLoadingList } = useSelector(
+  const { selectedPokemon, pokemonPage, page, isLoadingList, error } = useSelector(
     (state: State) => state
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
 
   useEffect(() => {
     dispatch(fetchPokemonList());
@@ -30,9 +32,10 @@ function Pokelist() {
 
   return (
     <div className="flex justify-between w-full h-full">
-      {
+
         <div className="flex flex-col gap-4 max-lg:w-full">
-          <div className="border-2 h-[calc(100%_-_32px)] lg:max-w-[350px] border-primary pb-4 pr-2 pt-2 rounded-lg ">
+         <SearchInput handleOpenModal={handleOpenModal} />
+          <div className="border-2 h-[calc(100%_-_90px)] lg:max-w-[350px] border-primary pb-4 pr-2 pt-2 rounded-lg ">
             {!isLoadingList && (
               <ul
                 className="h-full max-w-full 
@@ -151,8 +154,12 @@ function Pokelist() {
             )}
           </div>
         </div>
-      }
       {selectedPokemon && (
+        <div className="justify-center hidden w-full h-full lg:flex">
+          <PokeCard />
+        </div>
+      )}
+       {error && (
         <div className="justify-center hidden w-full h-full lg:flex">
           <PokeCard />
         </div>

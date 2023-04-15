@@ -3,15 +3,22 @@ import { PokemonPage } from "../models/PokemonList";
 
 export enum ActionType {
   FetchPokemonList = "FETCH_POKEMON_LIST",
+  SearchPokemon = "SEARCH_POKEMON",
   SetPokemonList = "SET_POKEMON_LIST",
   SelectPokemon = "SELECT_POKEMON",
   SetLoadingList = "SET_LOADING_LIST",
   SetLoadingCard = "SET_LOADING_CARD",
   SetPage = "SET_PAGE",
+  SetError = "SET_ERROR",
 }
 
 export interface FetchPokemonListAction {
   type: ActionType.FetchPokemonList;
+}
+
+export interface SearchPokemonAction {
+  type: ActionType.SearchPokemon;
+  payload: string;
 }
 
 export interface SetPokemonListAction {
@@ -39,10 +46,17 @@ export interface SetPageAction {
   payload: boolean;
 }
 
+export interface SetErrorAction {
+  type: ActionType.SetError;
+  payload: boolean;
+}
+
 export type PokemonAction =
   | SetLoadingListAction
   | SetLoadingCardAction
   | FetchPokemonListAction
   | SetPokemonListAction
   | SelectPokemonAction
-  | SetPageAction;
+  | SetPageAction
+  | SearchPokemonAction
+  | SetErrorAction;

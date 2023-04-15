@@ -3,20 +3,20 @@ import { PokemonPage } from "../models/PokemonList";
 import { ActionType, PokemonAction } from "./actionTypes";
 
 export interface State {
-  favouritePokemons: string[];
   isLoadingList: boolean;
   isLoadingCard: boolean;
   pokemonPage?: PokemonPage;
   selectedPokemon: Pokemon | null;
   page: number;
+  error: boolean;
 }
 
 const initialState: State = {
-  favouritePokemons: [],
   isLoadingList: false,
   isLoadingCard: false,
   selectedPokemon: null,
   page: 0,
+  error: false,
 };
 
 export const reducer = (state: State = initialState, action: PokemonAction): State => {
@@ -46,6 +46,11 @@ export const reducer = (state: State = initialState, action: PokemonAction): Sta
       ...state,
       isLoadingCard: action.payload,
     };
+    case ActionType.SetError:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
