@@ -154,7 +154,7 @@ function Pokelist() {
             )}
           </div>
         </div>
-      {selectedPokemon && (
+      {selectedPokemon && !error && (
         <div className="justify-center hidden w-full h-full lg:flex">
           <PokeCard />
         </div>
