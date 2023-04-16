@@ -1,14 +1,14 @@
 import { Pokemon } from "../models/Pokemon";
-import { PokemonPage } from "../models/PokemonList";
+import { PokemonList } from "../models/PokemonList";
 
 export enum ActionType {
   FetchPokemonList = "FETCH_POKEMON_LIST",
   SearchPokemon = "SEARCH_POKEMON",
   SetPokemonList = "SET_POKEMON_LIST",
+  SetFilteredPokemonList = "SET_FILTERED_POKEMON_LIST",
   SelectPokemon = "SELECT_POKEMON",
   SetLoadingList = "SET_LOADING_LIST",
   SetLoadingCard = "SET_LOADING_CARD",
-  SetPage = "SET_PAGE",
   SetError = "SET_ERROR",
 }
 
@@ -23,7 +23,12 @@ export interface SearchPokemonAction {
 
 export interface SetPokemonListAction {
   type: ActionType.SetPokemonList;
-  payload: PokemonPage;
+  payload: PokemonList[];
+}
+
+export interface SetFilteredPokemonListAction {
+  type: ActionType.SetFilteredPokemonList;
+  payload: PokemonList[];
 }
 
 export interface SelectPokemonAction {
@@ -41,11 +46,6 @@ export interface SetLoadingCardAction {
   payload: boolean;
 }
 
-export interface SetPageAction {
-  type: ActionType.SetPage;
-  payload: boolean;
-}
-
 export interface SetErrorAction {
   type: ActionType.SetError;
   payload: boolean;
@@ -56,7 +56,7 @@ export type PokemonAction =
   | SetLoadingCardAction
   | FetchPokemonListAction
   | SetPokemonListAction
+  | SetFilteredPokemonListAction
   | SelectPokemonAction
-  | SetPageAction
   | SearchPokemonAction
   | SetErrorAction;

@@ -1,19 +1,13 @@
 import { Dispatch } from "react";
 import { Pokemon } from "../models/Pokemon";
-import { PokemonPage } from "../models/PokemonList";
+import { PokemonList } from "../models/PokemonList";
 import PokemonService from "../services/PokemonService";
-import { ActionType, SetPokemonListAction, SelectPokemonAction, SetLoadingListAction, SetLoadingCardAction, SetPageAction, PokemonAction } from "./actionTypes";
+import { ActionType, SetPokemonListAction, SelectPokemonAction, SetLoadingListAction, SetLoadingCardAction, PokemonAction, SetFilteredPokemonListAction } from "./actionTypes";
 
-export const fetchPokemonList = (page?: string, next?: boolean): any => {
+export const fetchPokemonList = (): any => {
   return async (dispatch: Dispatch<PokemonAction>): Promise<void> => {
     dispatch(setLoadingList(true));
-    if (page === undefined) page = 'limit=100';
-    switch (next) {
-      case true: dispatch(setPage(true)); break;
-      case false: dispatch(setPage(false)); break;
-      default: dispatch(setPage(true)); break;
-    }
-    const pokemonData = await PokemonService.fetchAllPokemons(page);
+    const pokemonData = await PokemonService.fetchAllPokemons();
     dispatch(setPokemonList(pokemonData));
     dispatch(setLoadingList(false));
   };
@@ -34,8 +28,26 @@ export const searchPokemon = (name: string): any => {
   };
 };
 
-export const setPokemonList = (pokemonList: PokemonPage): SetPokemonListAction => ({
+export const setPokemonList = (pokemonList: PokemonList[]): SetPokemonListAction => ({
   type: ActionType.SetPokemonList,
+  payload: pokemonList,
+});
+
+export const filterPokemonList = (pokemonList: PokemonList[], filter: string): any => {
+  return async (dispatch: Dispatch<PokemonAction>): Promise<void> => {
+    if(filter === '') {
+      dispatch(setFilteredPokemonList([{name: 'No results', url: ''}]));
+      return;
+    };
+    dispatch(setLoadingList(true));
+    const pokemonData = pokemonList.filter((pokemon) => pokemon.name.toUpperCase().includes(filter));
+    dispatch(setFilteredPokemonList(pokemonData));
+    dispatch(setLoadingList(false));
+  };
+};
+
+export const setFilteredPokemonList = (pokemonList: PokemonList[]): SetFilteredPokemonListAction => ({
+  type: ActionType.SetFilteredPokemonList,
   payload: pokemonList,
 });
 
@@ -52,11 +64,6 @@ export const fetchPokemon = (name: string): any => {
 export const selectPokemon = (pokemon: Pokemon | null): SelectPokemonAction => ({
   type: ActionType.SelectPokemon,
   payload: pokemon,
-});
-
-export const setPage = (next: boolean): SetPageAction => ({
-  type: ActionType.SetPage,
-  payload: next,
 });
 
 export const setLoadingList = (isLoading: boolean): SetLoadingListAction => ({

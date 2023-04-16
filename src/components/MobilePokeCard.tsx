@@ -38,7 +38,7 @@ function MobilePokeCard() {
               <img
                 data-testid="card-sprite"
                 className="relative z-10 w-full h-full"
-                src={selectedPokemon.sprites.front_default}
+                src={selectedPokemon.sprites.front_default || 'assets/image-placeholder.png'}
                 alt="Miniature image of the pokemon"
               />
             </div>

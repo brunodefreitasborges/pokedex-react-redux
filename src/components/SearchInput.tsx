@@ -1,40 +1,36 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { searchPokemon } from "../store/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { filterPokemonList } from "../store/actions";
+import { State } from "../store/reducers";
 
-interface Props {
-  handleOpenModal: () => void;
+interface SearchInputProps {
+  onChange: (event: any) => void;
 }
 
-function SearchInput(props: Props) {
-
+function SearchInput(props: SearchInputProps) {
   const dispatch = useDispatch();
 
+  const { pokemonList } = useSelector((state: State) => state);
+
   const [inputValue, setInputValue] = useState("");
-  
+
   function handleInputChange(event: any) {
-    setInputValue(event.target.value);
-  }
-
-  function handleSubmit() {
-    if(!inputValue) return;
-    dispatch(searchPokemon(inputValue.toLowerCase()));
-    props.handleOpenModal(); 
-  }
-
-  function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleSubmit();
-    }
+    event.persist();
+    setInputValue(event.target.value.toUpperCase());
+    props.onChange(event.target.value.toUpperCase());
+    dispatch(filterPokemonList(pokemonList!, event.target.value.toUpperCase()));
   }
 
   return (
-       <input className="bg-transparent border-2 border-primary rounded-md py-2 px-2
+    <input
+      className="lg:max-w-[350px] bg-transparent border-2 border-primary rounded-md py-2 pl-2 sm:pl-8
           focus:outline-none focus:border-accent"
-          type="text" placeholder="Search..." onChange={handleInputChange} 
-          onSubmit={handleSubmit} onKeyPress={handleKeyPress} />
-  )
+      value={inputValue}
+      type="text"
+      placeholder="SEARCH..."
+      onChange={handleInputChange}
+    />
+  );
 }
 
-export default SearchInput
+export default SearchInput;

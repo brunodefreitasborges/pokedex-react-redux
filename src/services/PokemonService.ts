@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Pokemon } from "../models/Pokemon";
-import { PokemonPage } from "../models/PokemonList";
+import { PokemonList } from "../models/PokemonList";
 
 class PokemonService {
   static async getPokemonByName(name: string): Promise<Pokemon> {
@@ -10,10 +10,11 @@ class PokemonService {
     return pokemon;
   }
 
-  static async fetchAllPokemons(page: string): Promise<PokemonPage> {
-    const url = `https://pokeapi.co/api/v2/pokemon/?${page}`;
+  static async fetchAllPokemons(): Promise<PokemonList[]> {
+    console.log('fetching all pokemons')
+    const url = `https://pokeapi.co/api/v2/pokemon/?limit=1281`;
     const response = await axios.get(url);
-    return response.data;
+    return response.data.results;
   }
 }
 

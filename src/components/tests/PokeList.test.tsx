@@ -27,7 +27,6 @@ describe('PokeList Component', () => {
         next: 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20',
         previous: 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20',
       },
-      page: 1
     });
     render(
       <Provider store={store}>
@@ -47,7 +46,6 @@ describe('PokeList Component', () => {
       expect(actions).toEqual(
         expect.arrayContaining([
           expect.objectContaining({ type: 'SET_LOADING_LIST' }),
-          expect.objectContaining({ type: 'SET_PAGE' }),
           expect.objectContaining({ type: 'SET_POKEMON_LIST' }),
           expect.objectContaining({ type: 'SET_LOADING_LIST' })
         ])
@@ -74,87 +72,4 @@ describe('PokeList Component', () => {
       );
     });
   });
-
-  it('dispatches the fetchPokemonList action with a TRUE payload when the "Next" button is clicked', async () => {
-
-    const nextButton = screen.getByTestId('next-button');
-    fireEvent.click(nextButton);
-   
-    await waitFor(() => {
-      const actions = store.getActions();
-      expect(actions).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({ type: 'SET_PAGE', payload: true }),
-        ])
-      );
-    });
-  });
-
-  it('should have a disabled previous button if the page is equal to 1', () => {
-
-    const previousButton = screen.getByTestId('previous-button');
-    expect(previousButton).toHaveClass('text-gray-500');
-   
-  });
-
-  it('should have an enabled previous button if the page number is more than 1', async () => {
-    await waitFor(() => {
-      store.getState().page = 2;
-    });
-
-    render(
-      <Provider store={store}>
-        <PokeList/>
-      </Provider>
-    );
-  
-    const previousButton = await screen.getAllByTestId('previous-button')[1];
-    expect(previousButton).not.toHaveClass('text-gray-500');
-   
-  });
-
-  it('should have a disabled next button if the page is equal to 11', async () => {
-
-    await waitFor(() => {
-      store.getState().page = 11;
-    });
-
-    render(
-      <Provider store={store}>
-        <PokeList/>
-      </Provider>
-    );
-  
-    const previousButton = await screen.getAllByTestId('next-button')[1];
-    expect(previousButton).toHaveClass('text-gray-500');
-   
-  });
-
-  it('dispatches the fetchPokemonList action with a FALSE payload when the "Previous" button is clicked', async () => {
-
-    await waitFor(() => {
-      store.getState().page = 2;
-    });
-
-    await waitFor(() => {
-      render(
-        <Provider store={store}>
-          <PokeList/>
-        </Provider>
-      );
-    });
-
-    const previousButton = await screen.getAllByTestId('previous-button')[1];
-    fireEvent.click(previousButton);
-    
-    await waitFor(() => {
-      const actions = store.getActions();
-      expect(actions).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({ type: 'SET_PAGE', payload: false }),
-        ])
-      );
-    });
-  });
-
 });
