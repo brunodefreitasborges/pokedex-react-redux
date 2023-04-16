@@ -13,8 +13,8 @@ describe('PokeList Component', () => {
   beforeEach(() => {
     store = mockStore({
       selectedPokemon: null,
-      pokemonPage: {
-        results: [
+      filteredPokemonList: [],
+      pokemonList: [
           {
             name: 'pikachu',
             url: 'https://pokeapi.co/api/v2/pokemon/25/'
@@ -26,8 +26,7 @@ describe('PokeList Component', () => {
         ],
         next: 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20',
         previous: 'https://pokeapi.co/api/v2/pokemon?offset=20&limit=20',
-      },
-    });
+      });
     render(
       <Provider store={store}>
         <PokeList/>
