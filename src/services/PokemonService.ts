@@ -11,7 +11,6 @@ class PokemonService {
   }
 
   static async fetchAllPokemons(): Promise<PokemonList[]> {
-    console.log('fetching all pokemons')
     const url = `https://pokeapi.co/api/v2/pokemon/?limit=1281`;
     const response = await axios.get(url);
     return response.data.results;
