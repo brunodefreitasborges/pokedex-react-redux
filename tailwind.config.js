@@ -13,6 +13,9 @@ export default {
         "primary": "#D74526",
         "accent": "#F9A826",
         "background": "#2E382E",
+      },
+      screens: {
+        'tall': { 'raw': '(min-height: 720px)' },
       }
     },
   },

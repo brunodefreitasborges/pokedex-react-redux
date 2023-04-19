@@ -11,7 +11,7 @@ function PokeCard() {
     <>
       {selectedPokemon && !isLoadingCard && !error && (
         <div
-          className={`w-[500px] max-h-[600px] shadow-black shadow-2xl rounded-br-[100px] rounded-tl-[100px] 
+          className={`w-[500px] h-fit shadow-black shadow-2xl rounded-br-[100px] rounded-tl-[100px] 
         flex flex-col gap-8 items-center mt-8 py-8 px-4
         bg-type-${selectedPokemon.types[0].type.name}`}
         >
@@ -65,7 +65,7 @@ function PokeCard() {
                 </div>
               ))}
             </div>
-            <div className="flex justify-between w-full">
+            <div className="hidden tall:flex justify-between w-full">
               <div className="flex flex-col items-start w-2/5 h-full gap-4">
                 <h3 className="text-lg">Abilities</h3>
                 <ul className="flex flex-col gap-2">

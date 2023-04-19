@@ -12,13 +12,14 @@ function MobilePokeCard() {
     <>
       {selectedPokemon && !isLoadingCard && !error && (
         <div
-          className={`w-full h-full rounded-[20px] 
+          className={`w-full h-fit rounded-[20px] 
         flex flex-col gap-2 items-end py-2 px-2
         bg-type-${selectedPokemon.types[0].type.name}`}
         >
-          <div className="flex justify-around w-full">
+          <div className="flex justify-around w-full relative">
             <div className="flex flex-col items-end justify-center gap-2">
-              <div className="flex flex-wrap gap-2 text-xs sm:text-sm">
+            <img className="absolute top-0 left-0 w-4" src="/assets/exit.png" alt="" />
+              <div className="flex flex-wrap gap-2 mt-2 text-xs sm:text-sm">
                 <h3>Name:</h3>
                 <span data-testid="card-name">{capitalize(selectedPokemon.name)}</span>
               </div>
